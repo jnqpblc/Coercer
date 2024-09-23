@@ -16,7 +16,8 @@ def portmap_discover(target, port=135):
     stringBinding = r'ncacn_ip_tcp:%s[%d]' % (target, port)
     rpctransport = transport.DCERPCTransportFactory(stringBinding)
     dce = rpctransport.get_dce_rpc()
-    dce.connect()
+    try: dce.connect()
+    except: return None
     entries = epm.hept_lookup(None, dce=dce)
     endpoints = {}
     ports = set()

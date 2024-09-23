@@ -65,6 +65,8 @@ def action_scan(target, available_methods, options, credentials, reporter):
                         elif access_type == "ncacn_ip_tcp":
                             for access_method in access_methods:
                                 uuid, version = access_method["uuid"], access_method["version"]
+                                if not portmap:
+                                    break
                                 for port in options.dce_ports or portmap.get("ncacn_ip_tcp",{}).get("%s v%s"%(uuid.upper(),version),[]):
                                     if port not in tasks[access_type].keys():
                                         tasks[access_type][port] = {}
